@@ -36,6 +36,8 @@ This implementation gives you full control over the inbound and outbound communi
 **Region and Resource Placement Requirements**
 - **All Foundry workspace resources should be in the same region as the VNet**, including CosmosDB, Storage Account, AI Search, Foundry Account, Project, Managed Identity. The only exception is within the Foundry Account, you may choose to deploy your model to a different region, and any cross-region communication will be handled securely within our network infrastructure.
   - **Note:** Your Virtual Network can be in a different resource group than your Foundry workspace resources 
+
+
 [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fazure-ai-foundry%2Ffoundry-samples%2Frefs%2Fheads%2Fmain%2Fsamples%2Fmicrosoft%2Finfrastructure-setup%2F15-private-network-standard-agent-setup%2Fazuredeploy.json)
 
 ---
@@ -184,7 +186,7 @@ By bundling these BYO features (file storage, search, and thread storage), the s
 
 Azure AI Foundry (Cognitive Services)
 - Type: Microsoft.CognitiveServices/accounts
-- API version: 2024-06-01-preview
+- API version: 2025-04-01-preview
 - Kind: AIServices
 - SKU: S0
 - Identity: System-assigned
@@ -195,7 +197,7 @@ Azure AI Foundry (Cognitive Services)
 
 AI Model Deployment 
 - Type: Microsoft.CognitiveServices/accounts/deployments 
-- API version: 2024-06-01-preview 
+- API version: 2025-04-01-preview
 - SKU: Based on modelSkuName parameter, capacity set by modelCapacity 
 - Model properties:
   - Name: From modelName parameter
@@ -204,7 +206,7 @@ AI Model Deployment
 
 Azure AI Search 
 - Type: Microsoft.Search/searchServices
-- API version: 2023-11-01 
+- API version: 2024-06-01-preview
 - SKU: standard 
 - Partition Count: 1 
 - Replica Count: 1 
@@ -217,7 +219,7 @@ Azure AI Search
 
 Storage Account 
 - Type: Microsoft.Storage/storageAccounts 
-- API version: 2022-05-01 
+- API version: 2023-05-0
 - Kind: StorageV2 
 - SKU: ZRS or GRS (region dependent; use Standard_GRS if ZRS not available) 
 - Features:
@@ -273,6 +275,8 @@ Private endpoints ensure secure, internal-only connectivity. Private endpoints a
   - No credential storage
   - Platform-managed rotation
 
+  This template uses System Managed Identity, but User Assigned Managed Identity is also supported.
+
 - **Role Assignments**
   - **Azure AI Search**
     - Search Index Data Contributor (`8ebe5a00-799e-43f5-93ac-243d3dce84a7`)
@@ -280,20 +284,18 @@ Private endpoints ensure secure, internal-only connectivity. Private endpoints a
   - **Azure Storage Account**
     - Storage Blob Data Owner (`b7e6dc6d-f1e8-4753-8033-0f276bb0955b`)
     - Storage Queue Data Contributor (`974c5e8b-45b9-4653-ba55-5f855dd0fb88`) (if Azure Function tool enabled)
-    - Two containers will automatically be provisioned during the create capability host process:
+    - Two containers will automatically be provisioned during the project create capability host process:
       - Azure Blob Storage Container: `<workspaceId>-azureml-blobstore`
         - Storage Blob Data Contributor
       - Azure Blob Storage Container: `<workspaceId>-agents-blobstore`
         - Storage Blob Data Owner
-  - **Key Vault**
-    - Key Vault Contributor (`f25e0fa2-a7c8-4377-a976-54943a77a395`)
-    - Key Vault Secrets Officer (`b86a8fe4-44ce-4948-aee5-eccb2c155cd7`)
   - **Cosmos DB for NoSQL**
     - Cosmos DB Operator (`230815da-be43-4aae-9cb4-875f7bd000aa`)
     - Cosmos DB Built-in Data Contributor
-    - Cosmos DB for NoSQL container: `<${projectWorkspaceId}>-thread-message-store`
-    - Cosmos DB for NoSQL container: `<${projectWorkspaceId}>-system-thread-message-store`
-    - Cosmos DB for NoSQL container: `<${projectWorkspaceId}>-agent-entity-store`
+    - Three containers will automatically be provisioned during the create capability host process:
+      - Cosmos DB for NoSQL container: `<${projectWorkspaceId}>-thread-message-store`
+      - Cosmos DB for NoSQL container: `<${projectWorkspaceId}>-system-thread-message-store`
+      - Cosmos DB for NoSQL container: `<${projectWorkspaceId}>-agent-entity-store`
 
 
 ---
