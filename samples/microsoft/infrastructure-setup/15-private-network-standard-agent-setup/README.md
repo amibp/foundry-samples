@@ -213,7 +213,7 @@ Azure AI Search
 - Features:
   -  Disabled public network access
   -  AAD auth with HTTP 401 challenge
-  -  Syetm-assigned managed identity
+  -  System-assigned managed identity
 
 Storage Account 
 - Type: Microsoft.Storage/storageAccounts 
