@@ -14,7 +14,7 @@ languages:
 
 > **IMPORTANT**
 > 
-> Class A subnet support is only available in select regions and requires allowlisting of your subscription ID. Supported regions: West US, East US, East US 2, Central US, Japan East, France Central, [New] Spain Central, [New] UAE North
+> Class A subnet support is only available in a limited number of regions and requires your subscription id be allowlisted. Please reach out to fosteramanda@microsoft.com if you are interested in getting access. **Supported regions:** West US, East US, East US 2, Central US, Japan East, France Central, [New] Spain Central, [New] UAE North
 >
 > Class B and C subnet support is already GA and available in all regions supported by Azure AI Foundry Agent Service. No subscription allowlisting is required. Deployment templates and setup steps are identical for Class A, B, and C subnets; Class A remains in private preview solely because of its limited region coverage.
 
@@ -64,8 +64,7 @@ This implementation gives you full control over the inbound and outbound communi
 1. Network administrator permissions (if operating in a restricted or enterprise environment)
 
 1. Sufficient quota for all resources in your target Azure region
-  -   If no parameters are passed in, this template creates an Azure AI Foundry resource, Foundry project, Azure Cosmos DB for NoSQL, Azure AI Search, and Azure Storage account
-
+    * If no parameters are passed in, this template creates an Azure AI Foundry resource, Foundry project, Azure Cosmos DB for NoSQL, Azure AI Search, and Azure Storage account
 1. Azure CLI installed and configured on your local workstation or deployment pipeline server
 
 ---
@@ -76,8 +75,8 @@ This implementation gives you full control over the inbound and outbound communi
 1. Review network requirements and plan Virtual Network address space (e.g., 192.168.0.0/16 or an alternative non-overlapping address space)
 
 2. Two subnets are needed as well:  
-  - **Agent Subnet** (e.g., 192.168.0.0/24): Hosts Agent client for Agent workloads 
-  - **Private endpoint Subnet** (e.g. 192.168.1.0/24): Hosts private endpoints 
+    - **Agent Subnet** (e.g., 192.168.0.0/24): Hosts Agent client for Agent workloads 
+    - **Private endpoint Subnet** (e.g. 192.168.1.0/24): Hosts private endpoints 
     - Ensure that the address spaces for these subnets do not overlap with any existing networks in your Azure environment
   
   > **Note:** If you do not provide an existing virtual network, the template will create a new virtual network with the default address spaces and subnets described above. If you use an existing virtual network, make sure it already contains two subnets (Agent and Private Endpoint) before deploying the template.
