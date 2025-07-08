@@ -97,7 +97,7 @@ Note: If not provided, the following resources will be created automatically for
 
 1. **Use Existing Virtual Network and Subnets**
 
-To use an existing VNet and subnets, set the existingVnetResourceId parameter to the full Azure Resource ID of the target VNet and its address range, and provide the names of the two required subnets.  If the existing VNet is associated with private DNS zones, set the existingDnsZones paramater to the resource group name in which the zones are located. For example:
+To use an existing VNet and subnets, set the existingVnetResourceId parameter to the full Azure Resource ID of the target VNet and its address range, and provide the names of the two required subnets.  If the existing VNet is associated with private DNS zones, set the existingDnsZones parameter to the resource group name in which the zones are located. For example:
 - param existingVnetResourceId = "/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.Network/virtualNetworks/<vnet-name>"
 - param agentSubnetName string = 'agent-subnet' //optional, default is 'agent-subnet'
 - param agentSubnetPrefix string = '192.168.0.0/24' //optional, default is '192.168.0.0/24'
