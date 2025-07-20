@@ -22,21 +22,6 @@
     },
     "existingAoaiResourceId": {
       "value": ""
-    },
-    "modelName": {
-      "value": ""
-    },
-    "modelFormat": {
-      "value": ""
-    },
-    "modelVersion": {
-      "value": ""
-    },
-    "modelSkuName": {
-      "value": ""
-    },
-    "modelCapacity": {
-      "value": 0
     }
   }
 }
