@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { DefaultAzureCredential } from '@azure/identity';
-import { ToolUtility, DoneEvent, ErrorEvent } from '@azure/ai-agents';
+import { ToolUtility, DoneEvent, ErrorEvent, ThreadMessage } from '@azure/ai-agents';
 import { AIProjectClient } from '@azure/ai-projects';
 import { config } from 'dotenv';
 config();
@@ -15,7 +15,7 @@ await runAgents().catch(console.error);
 async function chatCompletion() {
     // <chat_completion>
     // Get the Azure AI endpoint and deployment name from environment variables
-    const endpoint = process.env.PROJECT_ENDPOINT;
+    const endpoint = process.env.PROJECT_ENDPOINT as string;
     const deployment = process.env.MODEL_DEPLOYMENT_NAME || 'gpt-4o';
 
     // Create an Azure OpenAI Client
@@ -40,7 +40,7 @@ async function chatCompletion() {
 
 async function runAgents() {
     // <create_and_run_agent>
-    const endpoint = process.env.PROJECT_ENDPOINT;
+    const endpoint = process.env.PROJECT_ENDPOINT as string;
     const deployment = process.env.MODEL_DEPLOYMENT_NAME || 'gpt-4o';
     const client = new AIProjectClient(endpoint, new DefaultAzureCredential());
 
@@ -89,7 +89,7 @@ async function runAgents() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const filePath = path.join(__dirname, '../data/product_info_1.md');
     const fileStream = fs.createReadStream(filePath);
-    fileStream.on('data', (chunk) => {
+    fileStream.on('data', (chunk: string | Buffer) => {
         console.log(`Read ${chunk.length} bytes of data.`);
     });
     const file = await client.agents.files.upload(fileStream, 'assistants', {
@@ -115,7 +115,7 @@ async function runAgents() {
         name: 'my-file-agent',
         instructions: 'You are a helpful assistant and can search information from uploaded files',
         tools: [fileSearchTool.definition],
-        toolResources: fileSearchTool.resources,
+        toolResources: fileSearchTool.resources
     });
 
     // Create a thread and message
@@ -151,7 +151,7 @@ async function runAgents() {
 }
 
 // Helper functions
-async function getAssistantMessage(messagesIterator) {
+async function getAssistantMessage(messagesIterator: AsyncIterable<ThreadMessage>): Promise<ThreadMessage | null>  {
     for await (const m of messagesIterator) {
         if (m.role === 'assistant') {
             return m;
@@ -161,12 +161,13 @@ async function getAssistantMessage(messagesIterator) {
 }
 
 // Print assistant message content nicely
-function printAssistantMessage(message) {
+function printAssistantMessage(message: ThreadMessage | null) {
     if (!message || !Array.isArray(message.content)) {
         console.log('No assistant message found or content is not in expected format.');
         return;
     }
-    let output = message.content.map(c => {
+    
+    const output = message.content.map((c: any) => {
         if (typeof c.text === 'object' && c.text.value) {
             return c.text.value;
         } else if (typeof c.text === 'string') {
@@ -175,9 +176,12 @@ function printAssistantMessage(message) {
             return JSON.stringify(c);
         }
     }).join('');
+    
     if (typeof output !== 'string') {
         console.log('Value is not a string:', output);
         return;
     }
+    
     output.split('\n').forEach(line => console.log(line));
 }
+
