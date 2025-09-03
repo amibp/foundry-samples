@@ -7,7 +7,6 @@ Standard Setup Network Secured Steps for main.bicep
   'westus'
   'eastus'
   'eastus2'
-  'centralus'
   'japaneast'
   'francecentral'
   'spaincentral'
@@ -22,6 +21,7 @@ Standard Setup Network Secured Steps for main.bicep
 
   // allowed only Class B and C
   'westus3'
+  'centralus'
   'uksouth'
   'southindia'
   'koreacentral'
