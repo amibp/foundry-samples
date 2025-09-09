@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.37.4.10188",
-      "templateHash": "13042473073221684784"
+      "templateHash": "1867878477139584929"
     }
   },
   "parameters": {
@@ -16,7 +16,6 @@
         "westus",
         "eastus",
         "eastus2",
-        "centralus",
         "japaneast",
         "francecentral",
         "spaincentral",
@@ -29,6 +28,7 @@
         "australiaeast",
         "swedencentral",
         "westus3",
+        "centralus",
         "uksouth",
         "southindia",
         "koreacentral",
@@ -186,12 +186,30 @@
     },
     "existingDnsZones": {
       "type": "object",
+      "defaultValue": {
+        "privatelink.services.ai.azure.com": "",
+        "privatelink.openai.azure.com": "",
+        "privatelink.cognitiveservices.azure.com": "",
+        "privatelink.search.windows.net": "",
+        "privatelink.blob.core.windows.net": "",
+        "privatelink.documents.azure.com": "",
+        "privatelink.azure-api.net": ""
+      },
       "metadata": {
         "description": "Object mapping DNS zone names to their resource group, or empty string to indicate creation"
       }
     },
     "dnsZoneNames": {
       "type": "array",
+      "defaultValue": [
+        "privatelink.services.ai.azure.com",
+        "privatelink.openai.azure.com",
+        "privatelink.cognitiveservices.azure.com",
+        "privatelink.search.windows.net",
+        "privatelink.blob.core.windows.net",
+        "privatelink.documents.azure.com",
+        "privatelink.azure-api.net"
+      ],
       "metadata": {
         "description": "Zone Names for Validation of existing Private Dns Zones"
       }

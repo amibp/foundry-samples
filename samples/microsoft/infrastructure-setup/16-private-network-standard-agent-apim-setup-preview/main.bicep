@@ -9,7 +9,6 @@ Standard Setup Network Secured Steps for main.bicep
   'eastus2'
   'japaneast'
   'francecentral'
-  'spaincentral'
   'uaenorth'
   'southcentralus'
   'italynorth'
@@ -21,6 +20,7 @@ Standard Setup Network Secured Steps for main.bicep
 
   // allowed only Class B and C
   'westus3'
+  'spaincentral'
   'centralus'
   'uksouth'
   'southindia'
@@ -97,10 +97,26 @@ param apiManagementResourceId string = ''
 //param existingDnsZonesResourceGroup string = ''
 
 @description('Object mapping DNS zone names to their resource group, or empty string to indicate creation')
-param existingDnsZones object
+param existingDnsZones object = {
+  'privatelink.services.ai.azure.com': ''
+  'privatelink.openai.azure.com': ''
+  'privatelink.cognitiveservices.azure.com': ''               
+  'privatelink.search.windows.net': ''           
+  'privatelink.blob.core.windows.net': ''                            
+  'privatelink.documents.azure.com': ''
+  'privatelink.azure-api.net': ''                       
+}
 
 @description('Zone Names for Validation of existing Private Dns Zones')
-param dnsZoneNames array
+param dnsZoneNames array = [
+  'privatelink.services.ai.azure.com'
+  'privatelink.openai.azure.com'
+  'privatelink.cognitiveservices.azure.com'
+  'privatelink.search.windows.net'
+  'privatelink.blob.core.windows.net'
+  'privatelink.documents.azure.com'
+  'privatelink.azure-api.net'
+]
 
 
 var projectName = toLower('${firstProjectName}${uniqueSuffix}')
