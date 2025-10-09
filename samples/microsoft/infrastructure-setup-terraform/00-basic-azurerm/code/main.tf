@@ -35,9 +35,6 @@ resource "azurerm_cognitive_account" "ai_foundry" {
   custom_subdomain_name = "aifoundry${random_string.unique.result}"
   project_management_enabled = true
 
-  tags = {
-    Acceptance = "Test"
-  }
 }
 
 ## Create a deployment for OpenAI's GPT-4o in the AI Foundry resource
