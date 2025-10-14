@@ -4,12 +4,12 @@ param projectName string
 param projectDescription string
 param displayName string
 
-resource account 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' existing = {
+resource account 'Microsoft.CognitiveServices/accounts@2025-06-01' existing = {
   name: accountName
   scope: resourceGroup()
 }
 
-resource project 'Microsoft.CognitiveServices/accounts/projects@2025-04-01-preview' = {
+resource project 'Microsoft.CognitiveServices/accounts/projects@2025-06-01' = {
   parent: account
   name: projectName
   location: location

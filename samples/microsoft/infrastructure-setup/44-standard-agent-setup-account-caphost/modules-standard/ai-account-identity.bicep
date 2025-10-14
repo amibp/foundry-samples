@@ -32,7 +32,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' existing 
   scope: resourceGroup(azureStorageSubscriptionId, azureStorageResourceGroupName)
 }
 
-resource account 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
+resource account 'Microsoft.CognitiveServices/accounts@2025-06-01' = {
   name: accountName
   location: location
   sku: {
@@ -57,7 +57,7 @@ resource account 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
   }
 
   // create connections for storing agents threads and messages in your own storage
-  resource account_connection_cosmosdb_account 'connections@2025-04-01-preview' = {
+  resource account_connection_cosmosdb_account 'connections@2025-06-01' = {
     name: cosmosDBName
     properties: {
       category: 'CosmosDB'
@@ -71,7 +71,7 @@ resource account 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
     }
   }
 
-  resource account_connection_azure_storage 'connections@2025-04-01-preview' = {
+  resource account_connection_azure_storage 'connections@2025-06-01' = {
     name: azureStorageName
     properties: {
       category: 'AzureStorageAccount'
@@ -85,7 +85,7 @@ resource account 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
     }
   }
 
-  resource account_connection_azureai_search 'connections@2025-04-01-preview' = {
+  resource account_connection_azureai_search 'connections@2025-06-01' = {
     name: aiSearchName
     properties: {
       category: 'CognitiveSearch'
@@ -100,7 +100,7 @@ resource account 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
   }
 }
 
-resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-04-01-preview'=  {
+resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-06-01'=  {
   parent: account
   name: modelName
   sku : {

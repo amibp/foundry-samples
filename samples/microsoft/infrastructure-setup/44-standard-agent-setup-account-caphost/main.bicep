@@ -226,6 +226,7 @@ module addCapabilityHost 'modules-standard/add-capability-host.bicep' = {
   name: 'capabilityHost-configuration-${uniqueSuffix}-deployment'
   params: {
     accountName: aiAccount.outputs.accountName
+    projectName: aiProject.outputs.projectName
     cosmosDBConnection: aiAccount.outputs.cosmosDBConnection
     azureStorageConnection: aiAccount.outputs.azureStorageConnection
     aiSearchConnection: aiAccount.outputs.aiSearchConnection
